@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           Locale("en", "US"), // OR Locale('ar', 'AE') OR Other RTL locales
         ],
         debugShowCheckedModeBanner: false,
-        title: 'Corona Out',
+        title: 'Sharjah Desert Park',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: p,
