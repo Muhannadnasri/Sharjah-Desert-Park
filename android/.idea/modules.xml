@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/793229952/android.flutter_plugin_android_lifecycle.iml" filepath="$PROJECT_DIR$/.idea/modules/793229952/android.flutter_plugin_android_lifecycle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1433253254/android.google_maps_flutter.iml" filepath="$PROJECT_DIR$/.idea/modules/1433253254/android.google_maps_flutter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1025703406/android.path_provider_android.iml" filepath="$PROJECT_DIR$/.idea/modules/1025703406/android.path_provider_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-207826536/android.shared_preferences_android.iml" filepath="$PROJECT_DIR$/.idea/modules/-207826536/android.shared_preferences_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1490068224/android.sqflite.iml" filepath="$PROJECT_DIR$/.idea/modules/-1490068224/android.sqflite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1778748218/android.url_launcher_android.iml" filepath="$PROJECT_DIR$/.idea/modules/-1778748218/android.url_launcher_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1151809177/android.webview_flutter_android.iml" filepath="$PROJECT_DIR$/.idea/modules/1151809177/android.webview_flutter_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1461214464/com.baseflow.geolocator.android.geolocator_android.iml" filepath="$PROJECT_DIR$/.idea/modules/-1461214464/com.baseflow.geolocator.android.geolocator_android.iml" />
+    </modules>
+  </component>
+</project>

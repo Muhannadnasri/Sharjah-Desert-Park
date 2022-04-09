@@ -1,0 +1,53 @@
+name: epaa_app
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter_localizations: 
+    sdk: flutter
+  localization: ^2.1.0
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^0.22.0
+  cached_network_image: ^3.1.0
+  badges: ^2.0.2
+  carousel_slider: ^4.0.0
+  flutter_zoom_drawer: ^2.3.1+1
+  google_maps_flutter: ^2.1.2
+  # location: ^4.3.0
+  geolocator: ^7.6.2
+  shared_preferences: ^2.0.13
+  url_launcher: ^6.0.20
+  webview_flutter_plus: ^0.3.0+2
+  font_awesome_flutter: ^10.0.0
+  flutter_markdown: ^0.6.9
+  flutter_launcher_icons: ^0.9.2
+  google_maps_flutter_web: ^0.3.2+1
+  get: ^4.6.1
+# 
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/EPAA-logo.png"
+
+flutter:
+
+  uses-material-design: true
+  
+  assets:
+    - assets/icons/
+    - assets/icons/category/
+    - assets/images/
+    - assets/html/
