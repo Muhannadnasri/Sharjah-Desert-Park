@@ -1,0 +1,4 @@
+#Thu Apr 21 17:18:29 GST 2022
+base.0=/Users/user/Documents/Sharjah-Desert-Park/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

@@ -1,106 +1,221 @@
+import 'package:epaa_app/screens/payment.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../theme/color.dart';
-import '../widgets/text-field-input.dart';
+import '../widgets/Chipss.dart';
+import '../widgets/button_widget.dart';
 
 class BookingPage extends StatefulWidget {
+  final String title;
   @override
   State<BookingPage> createState() => _BookingPageState();
+  const BookingPage({Key? key, required this.title}) : super(key: key);
 }
 
 class _BookingPageState extends State<BookingPage> {
-  TextEditingController _controllerStudent = TextEditingController();
-  TextEditingController _controllerTeacher = TextEditingController();
-  List<Widget> _studentList = [];
-  List<Widget> _teacherList = [];
+  final GlobalKey<ChipsInputState> _chipKey = GlobalKey();
+  final GlobalKey<ChipsInputState> _chipKeyPhone = GlobalKey();
+  final GlobalKey<ChipsInputState> _chipTeacherKey = GlobalKey();
 
-  void _addStudentList() {
-    setState(() {
-      _studentList.add(buildStudent());
-    });
-  }
+  final GlobalKey<FormState> _registerEmailKey = GlobalKey();
+  String schoolName = '';
+  String teacherNumber = '';
 
-  void _removeStudentList() {
-    setState(() {
-      _studentList.removeLast();
-    });
-  }
+  String teacherEmail = '';
 
-  void _addTeacherList() {
-    setState(() {
-      _teacherList.add(buildTeacher());
-    });
-  }
-
-  void _removeTeacherList() {
-    setState(() {
-      _teacherList.removeLast();
-    });
-  }
-
+  int? totalStudent = 0;
+  int? totalTeacher = 0;
+  int? totalAmount = 0;
+  int? totalDiscountTeacher = 0;
+  List<String>? studentsName;
+  List<String>? teacherName;
   @override
   void initState() {
     super.initState();
-    _controllerStudent.text = "0";
-    _controllerTeacher.text = "0";
-    // load();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomSheet: Container(
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: appBarColor,
+        foregroundColor: Colors.black,
+        title: Image.asset(
+          'assets/images/logo-full-en-white3.png',
+          height: 40,
+          width: 200,
+        ),
+        elevation: 0.0,
+      ),
+      // bottomSheet: Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(bottom: 20.0),
+      //       child: ButtonWidget(
+      //         text: 'Pay',
+      //         backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
+      //         textColor: const [
+      //           Colors.white,
+      //           Colors.white,
+      //         ],
+      //         onPressed: () {
+      //           setState(() {
+      //             totalStudent = _chipKey.currentState?.getTags().length;
+      //             totalTeacher = _chipTeacherKey.currentState?.getTags().length;
+
+      //             if (totalStudent! >= 20) {
+      //               totalDiscountTeacher = totalTeacher! - 1;
+      //               totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
+      //             } else {
+      //               totalAmount = totalStudent! * 2 + totalTeacher! * 5;
+      //             }
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                 builder: (context) => PaymentPage(
+      //                   totalStudent: totalStudent,
+      //                   totalTeacher: totalTeacher,
+      //                   totalDiscountTeacher: totalDiscountTeacher,
+      //                   totalAmount: totalAmount,
+      //                 ),
+      //               ),
+      //             );
+      //           });
+      //         },
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: ButtonWidget(
+              text: 'Pay',
+              backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
+              textColor: const [
+                Colors.white,
+                Colors.white,
+              ],
+              onPressed: () {
+                _registerEmailKey.currentState?.save();
+                print(teacherEmail);
+                setState(() {
+                  totalStudent = _chipKey.currentState?.getTags().length;
+
+                  studentsName = _chipKey.currentState?.getTags();
+
+                  totalTeacher = _chipTeacherKey.currentState?.getTags().length;
+                  teacherName = _chipTeacherKey.currentState?.getTags();
+                  if (totalStudent! >= 20) {
+                    totalDiscountTeacher = totalTeacher! - 1;
+                    totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
+                  } else {
+                    totalDiscountTeacher = totalTeacher;
+                    totalAmount = totalStudent! * 2 + totalTeacher! * 5;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentPage(
+                        totalStudent: totalStudent,
+                        schoolName: schoolName,
+                        teacherNumber: teacherNumber,
+                        studentsName: studentsName,
+                        teacherEmail: teacherEmail,
+                        teacherName: teacherName,
+                        totalTeacher: totalTeacher,
+                        totalDiscountTeacher: totalDiscountTeacher,
+                        totalAmount: totalAmount,
+                      ),
+                    ),
+                  );
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+      body: Container(
+        decoration: BoxDecoration(
           color: Colors.white,
-          height: 80,
-          // alignment: Alignment.bottomCenter,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width - 20,
-                  child: RaisedButton(
-                    color: appBarColor,
-                    textColor: Colors.white,
-                    child: Text('Submit'),
-                    onPressed: () {
-                      // Navigator.pop(context);
-                      setState(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BookingPage(),
-                          ),
-                        );
-                      });
-                    },
+        ),
+        child: ListView(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 50,
+                  child: Text(
+                    // '',
+                    widget.title,
+                    style: TextStyle(fontSize: 25),
                   ),
                 ),
-              ),
-            ],
-          ),
-          // child:
-        ),
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: appBarColor,
-              pinned: true,
-              snap: true,
-              foregroundColor: Colors.black,
-              floating: true,
-              title: getAppBar(),
+              ],
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => buildBody(),
-                childCount: 1,
-              ),
+            buildTextField(
+              "School Name",
+              Icons.school,
+              size,
+              (value) {
+                setState(() {
+                  schoolName = value;
+                });
+              },
+            ),
+            buildTextFieldTeacher(
+              "Teacher's Name",
+              size,
+              (value) {
+                setState(() {});
+              },
+            ),
+            buildTextField(
+              "Teacher Number",
+              Icons.phone,
+              size,
+              (value) {
+                setState(() {
+                  teacherNumber = value;
+                });
+              },
+            ),
+            buildTextFieldTeacherEmail(
+              "Teacher Email",
+              Icons.email,
+              size,
+              (value) {
+                setState(() {
+                  teacherEmail = value;
+                });
+              },
+            ),
+            buildTextFieldStudent(
+              "Student's Name",
+              size,
+              (value) {
+                setState(() {});
+              },
+            ),
+            buildTextFieldStudentPhone(
+              "Student's Number",
+              size,
+              (value) {
+                setState(() {});
+              },
+            ),
+            SizedBox(
+              height: 100,
             ),
           ],
         ),
@@ -108,330 +223,289 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  Widget getAppBar() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('Booking ',
-              style: TextStyle(
-                color: textColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 18,
-              )),
-        ],
-      ),
-    );
-  }
+  bool pwVisible = false;
 
-  buildStudent() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Text('Student Number  ${_controllerStudent.text}'),
-          SizedBox(
-            height: 5,
-          ),
-          TextInputField(
-            hint: 'Student Name',
-            icon: Icons.person,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextInputField(
-            hint: 'Student Number',
-            icon: Icons.phone,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextInputField(
-            hint: 'Student School',
-            icon: Icons.school,
-          ),
-        ],
-      ),
-    );
-  }
-
-  buildTeacher() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Text('Teacher Number  ${_controllerTeacher.text}'),
-          SizedBox(
-            height: 5,
-          ),
-          TextInputField(
-            hint: 'Teacher Name',
-            icon: Icons.person,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextInputField(
-            hint: 'Teacher Number',
-            icon: Icons.phone,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextInputField(
-            hint: 'Teacher School',
-            icon: Icons.school,
-          ),
-        ],
-      ),
-    );
-  }
-
-  buildBody() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 50,
-            // decoration: BoxDecoration(
-            //     border: Border.all(
-            //       color: Colors.black,
-            //     ),
-            //     borderRadius: BorderRadius.all(Radius.circular(20))),
-            // color: Colors.grey[300],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+  Widget buildTextFieldTeacher(
+    String hintText,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: ChipsInput(
+        key: _chipTeacherKey,
+        keyboardAppearance: Brightness.dark,
+        textCapitalization: TextCapitalization.words,
+        inputType: TextInputType.name,
+        maxTagSize: 20,
+        width: MediaQuery.of(context).size.width,
+        maxChips: 3,
+        separator: '\n',
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(5),
+          hintText: "Teacher's Name",
+        ),
+        initialTags: const [],
+        chipTextValidator: (String value) {
+          value.contains('!');
+          return -1;
+        },
+        countMaxTextStyle: TextStyle(fontSize: 10, color: Colors.red),
+        countTextStyle: TextStyle(fontSize: 10),
+        chipBuilder: (context, state, String tag) {
+          return InputChip(
+            labelPadding: const EdgeInsets.only(left: 5.0, right: 3),
+            backgroundColor: Colors.grey[400],
+            shape: const StadiumBorder(
+                side: BorderSide(
+                    width: 1.8, color: Color.fromRGBO(228, 230, 235, 1))),
+            shadowColor: Colors.grey,
+            key: ObjectKey(tag),
+            label: Row(
               children: [
-                Container(
-                  child: Text('Number of student'),
+                Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: 18,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Center(
-                    child: Container(
-                      width: 100.0,
-                      foregroundDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(
-                          color: Colors.blueGrey,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(8.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              controller: _controllerStudent,
-                              keyboardType: TextInputType.numberWithOptions(
-                                decimal: false,
-                                signed: true,
-                              ),
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 38.0,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        width: 0.5,
-                                      ),
-                                    ),
-                                  ),
-                                  child: InkWell(
-                                    child: Icon(
-                                      Icons.arrow_drop_up,
-                                      size: 18.0,
-                                    ),
-                                    onTap: () {
-                                      int currentValue =
-                                          int.parse(_controllerStudent.text);
-                                      setState(() {
-                                        currentValue++;
-                                        _addStudentList();
-                                        _controllerStudent.text = (currentValue)
-                                            .toString(); // incrementing value
-                                      });
-                                    },
-                                  ),
-                                ),
-                                InkWell(
-                                  child: Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 18.0,
-                                  ),
-                                  onTap: () {
-                                    int currentValue =
-                                        int.parse(_controllerStudent.text);
-                                    setState(() {
-                                      print("Setting state");
-                                      currentValue--;
-
-                                      // _studentList.clear();
-                                      _removeStudentList();
-
-                                      _controllerStudent.text =
-                                          (currentValue > 0 ? currentValue : 0)
-                                              .toString(); // decrementing value
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                SizedBox(
+                  width: 3,
+                ),
+                Text(
+                  tag.toString(),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
-          ),
-          Container(
-            height: 150,
-            child: ListView.builder(
-                itemCount: _studentList.length,
-                itemBuilder: (context, index) {
-                  return _studentList[index];
-                }),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 50,
-            // decoration: BoxDecoration(
-            //     border: Border.all(
-            //       color: Colors.black,
-            //     ),
-            //     borderRadius: BorderRadius.all(Radius.circular(20))),
-            // color: Colors.grey[300],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  child: Text('Number of teacher'),
+            onDeleted: () => state.deleteChip(tag),
+            labelStyle: TextStyle(color: Colors.white),
+            deleteIconColor: Colors.white,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildTextFieldTeacherEmail(
+    String hintText,
+    IconData icon,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: Container(
+        width: size.width * 0.9,
+        height: size.height * 0.06,
+        decoration: BoxDecoration(
+          color: const Color(0xffF7F8F8),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Form(
+          key: _registerEmailKey,
+          child: TextFormField(
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(new RegExp(r"\s\b|\b\s"))
+            ],
+            style: TextStyle(color: Colors.black),
+            onSaved: onSaved,
+            decoration: InputDecoration(
+              errorStyle: const TextStyle(height: 0),
+              hintStyle: const TextStyle(
+                color: Color(0xffADA4A5),
+              ),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(
+                top: size.height * 0.02,
+              ),
+              hintText: hintText,
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(
+                  top: size.height * 0.005,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Center(
-                    child: Container(
-                      width: 100.0,
-                      foregroundDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(
-                          color: Colors.blueGrey,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(8.0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              controller: _controllerTeacher,
-                              keyboardType: TextInputType.numberWithOptions(
-                                decimal: false,
-                                signed: true,
-                              ),
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 38.0,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        width: 0.5,
-                                      ),
-                                    ),
-                                  ),
-                                  child: InkWell(
-                                    child: Icon(
-                                      Icons.arrow_drop_up,
-                                      size: 18.0,
-                                    ),
-                                    onTap: () {
-                                      int currentValue =
-                                          int.parse(_controllerTeacher.text);
-                                      setState(() {
-                                        currentValue++;
-                                        _addTeacherList();
-                                        _controllerTeacher.text = (currentValue)
-                                            .toString(); // incrementing value
-                                      });
-                                    },
-                                  ),
-                                ),
-                                InkWell(
-                                  child: Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 18.0,
-                                  ),
-                                  onTap: () {
-                                    int currentValue =
-                                        int.parse(_controllerTeacher.text);
-                                    setState(() {
-                                      print("Setting state");
-                                      currentValue--;
-                                      _removeTeacherList();
-                                      _controllerTeacher.text =
-                                          (currentValue > 0 ? currentValue : 0)
-                                              .toString(); // decrementing value
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                child: Icon(
+                  icon,
+                  color: const Color(0xff7B6F72),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextField(
+    String hintText,
+    IconData icon,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: Container(
+        width: size.width * 0.9,
+        height: size.height * 0.06,
+        decoration: BoxDecoration(
+          color: const Color(0xffF7F8F8),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Form(
+          // key: _registerKey,
+          child: TextFormField(
+            style: TextStyle(color: Colors.black),
+            onSaved: onSaved,
+            decoration: InputDecoration(
+              errorStyle: const TextStyle(height: 0),
+              hintStyle: const TextStyle(
+                color: Color(0xffADA4A5),
+              ),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(
+                top: size.height * 0.02,
+              ),
+              hintText: hintText,
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(
+                  top: size.height * 0.005,
+                ),
+                child: Icon(
+                  icon,
+                  color: const Color(0xff7B6F72),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFieldStudent(
+    String hintText,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: ChipsInput(
+        key: _chipKey,
+        keyboardAppearance: Brightness.dark,
+        textCapitalization: TextCapitalization.words,
+        inputType: TextInputType.name,
+        maxTagSize: 20,
+        width: MediaQuery.of(context).size.width,
+        enabled: true,
+        maxChips: 50,
+        separator: '\n',
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(5),
+          hintText: "Student's Name",
+        ),
+        initialTags: const [],
+        chipTextValidator: (String value) {
+          value.contains('!');
+          return -1;
+        },
+        countMaxTextStyle: TextStyle(fontSize: 10, color: Colors.red),
+        countTextStyle: TextStyle(fontSize: 10),
+        chipBuilder: (context, state, String tag) {
+          return InputChip(
+            labelPadding: const EdgeInsets.only(left: 5.0, right: 3),
+            backgroundColor: Colors.grey[400],
+            shape: const StadiumBorder(
+                side: BorderSide(
+                    width: 1.8, color: Color.fromRGBO(228, 230, 235, 1))),
+            shadowColor: Colors.grey,
+            key: ObjectKey(tag),
+            label: Row(
+              children: [
+                Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: 18,
+                ),
+                SizedBox(
+                  width: 3,
+                ),
+                Text(
+                  tag.toString(),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
-          ),
-          Container(
-            height: 150,
-            child: ListView.builder(
-                itemCount: _teacherList.length,
-                itemBuilder: (context, index) {
-                  return _teacherList[index];
-                }),
-          ),
-        ],
+            onDeleted: () => state.deleteChip(tag),
+            labelStyle: TextStyle(color: Colors.white),
+            deleteIconColor: Colors.white,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildTextFieldStudentPhone(
+    String hintText,
+    // IconData icon,
+    // bool password,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: ChipsInput(
+        key: _chipKeyPhone,
+        keyboardAppearance: Brightness.dark,
+        textCapitalization: TextCapitalization.words,
+        inputType: TextInputType.name,
+        maxTagSize: 20,
+        width: MediaQuery.of(context).size.width,
+        enabled: true,
+        maxChips: 50,
+        separator: '\n',
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(5),
+          hintText: "Student's Number",
+        ),
+        initialTags: const [],
+        chipTextValidator: (String value) {
+          value.contains('!');
+          return -1;
+        },
+        countMaxTextStyle: TextStyle(fontSize: 10, color: Colors.red),
+        countTextStyle: TextStyle(fontSize: 10),
+        chipBuilder: (context, state, String tag) {
+          return InputChip(
+            labelPadding: const EdgeInsets.only(left: 5.0, right: 3),
+            backgroundColor: Colors.grey[400],
+            shape: const StadiumBorder(
+                side: BorderSide(
+                    width: 1.8, color: Color.fromRGBO(228, 230, 235, 1))),
+            shadowColor: Colors.grey,
+            key: ObjectKey(tag),
+            label: Row(
+              children: [
+                Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: 18,
+                ),
+                SizedBox(
+                  width: 3,
+                ),
+                Text(
+                  tag.toString(),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            onDeleted: () => state.deleteChip(tag),
+            labelStyle: TextStyle(color: Colors.white),
+            deleteIconColor: Colors.white,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          );
+        },
       ),
     );
   }

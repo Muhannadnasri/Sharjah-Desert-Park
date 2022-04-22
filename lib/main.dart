@@ -173,24 +173,24 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
                     thickness: 0.4,
                     color: Color.fromARGB(255, 54, 54, 54),
                   ),
-                  ListTile(
-                    dense: true,
-                    textColor: Colors.black54,
-                    leading: Image.asset(
-                      'assets/icons/map.png',
-                      height: 35,
-                    ),
-                    title: Text(
-                      lang == 1 ? "Map" : "خريطة",
-                    ),
-                    onTap: () {
-                      // logOut(context);
-                    },
-                  ),
-                  Divider(
-                    thickness: 0.4,
-                    color: Color.fromARGB(255, 54, 54, 54),
-                  ),
+                  // ListTile(
+                  //   dense: true,
+                  //   textColor: Colors.black54,
+                  //   leading: Image.asset(
+                  //     'assets/icons/map.png',
+                  //     height: 35,
+                  //   ),
+                  //   title: Text(
+                  //     lang == 1 ? "Map" : "خريطة",
+                  //   ),
+                  //   onTap: () {
+                  //     // logOut(context);
+                  //   },
+                  // ),
+                  // Divider(
+                  //   thickness: 0.4,
+                  //   color: Color.fromARGB(255, 54, 54, 54),
+                  // ),
                   ListTile(
                     dense: true,
                     textColor: Colors.black54,

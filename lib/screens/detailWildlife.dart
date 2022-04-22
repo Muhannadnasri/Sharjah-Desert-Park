@@ -13,61 +13,63 @@ class _DetailWildlifePageState extends State<DetailWildlifePage> {
   // MovieDetailsPage(this.movie);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomSheet: Container(
-          color: Colors.white,
-          height: 80,
-          // alignment: Alignment.bottomCenter,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width - 20,
-                  child: RaisedButton(
-                    color: appBarColor,
-                    textColor: Colors.white,
-                    child: Text(lang == 1 ? 'Booking' : 'الحجز'),
-                    onPressed: () {
-                      // Navigator.pop(context);
-                      setState(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BookingPage(),
+    return Scaffold(
+      bottomSheet: Container(
+        color: Colors.white,
+        height: 80,
+        // alignment: Alignment.bottomCenter,
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                height: 40,
+                width: MediaQuery.of(context).size.width - 20,
+                child: RaisedButton(
+                  color: appBarColor,
+                  textColor: Colors.white,
+                  child: Text(lang == 1 ? 'Booking' : 'الحجز'),
+                  onPressed: () {
+                    // Navigator.pop(context);
+                    setState(() {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookingPage(
+                            title: lang == 1
+                                ? "Arabia's Wildlife Centre"
+                                : "حيوانات شبه الجزيرة العربية",
                           ),
-                        );
-                      });
-                    },
-                  ),
+                        ),
+                      );
+                    });
+                  },
                 ),
-              ),
-            ],
-          ),
-          // child:
-        ),
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: appBarColor,
-              pinned: true,
-              snap: true,
-              foregroundColor: Colors.black,
-              floating: true,
-              title: getAppBar(),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => buildBody(),
-                childCount: 1,
               ),
             ),
           ],
         ),
+        // child:
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: appBarColor,
+            pinned: true,
+            snap: true,
+            foregroundColor: Colors.black,
+            floating: true,
+            title: getAppBar(),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => buildBody(),
+              childCount: 1,
+            ),
+          ),
+        ],
       ),
     );
   }

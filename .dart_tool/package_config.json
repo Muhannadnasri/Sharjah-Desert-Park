@@ -32,6 +32,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "bottom_inset_observer",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/bottom_inset_observer-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "bottom_sheet",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/bottom_sheet-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "cached_network_image",
       "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/cached_network_image-3.2.0",
       "packageUri": "lib/",
@@ -134,6 +146,30 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_chips_input",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_chips_input-1.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_keyboard_visibility-5.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_platform_interface",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_keyboard_visibility_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_web",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_keyboard_visibility_web-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_launcher_icons",
       "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_launcher_icons-0.9.2",
       "packageUri": "lib/",
@@ -166,6 +202,12 @@
     {
       "name": "flutter_test",
       "rootUri": "file:///Users/user/Developer/flutter/packages/flutter_test",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_typeahead",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_typeahead-3.2.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -294,6 +336,18 @@
       "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/localization-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.13"
+    },
+    {
+      "name": "logging",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/logging-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "mailer",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/mailer-5.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "markdown",
@@ -614,6 +668,36 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "video_player",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/video_player-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "video_player_android",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/video_player_android-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "video_player_avfoundation",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/video_player_avfoundation-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "video_player_platform_interface",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/video_player_platform_interface-5.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "video_player_web",
+      "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/video_player_web-2.0.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "webview_flutter",
       "rootUri": "file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/webview_flutter-3.0.1",
       "packageUri": "lib/",
@@ -674,7 +758,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2022-04-09T10:32:42.885725Z",
+  "generated": "2022-04-21T13:16:14.587692Z",
   "generator": "pub",
   "generatorVersion": "2.17.0-182.1.beta"
 }

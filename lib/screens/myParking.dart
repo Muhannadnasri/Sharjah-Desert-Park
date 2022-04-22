@@ -181,115 +181,113 @@ class _MyParkingPageState extends State<MyParkingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomSheet: Container(
-          color: Colors.white,
-          height: 100,
-          // alignment: Alignment.bottomCenter,
-          width: MediaQuery.of(context).size.width,
-          child: check == false
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SizedBox(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width - 20,
-                        child: RaisedButton(
-                          color: appBarColor,
-                          textColor: Colors.white,
-                          child:
-                              Text(lang == 1 ? 'Save My Parking' : "حفظ موقفي"),
-                          onPressed: () {
-                            setState(() {
-                              // _getCurrentLocation();
-                              _getLocation();
-                              check = true;
-                              // _getLocation();
-                              // _set();
-                            });
-                          },
-                        ),
+    return Scaffold(
+      bottomSheet: Container(
+        color: Colors.white,
+        height: 100,
+        // alignment: Alignment.bottomCenter,
+        width: MediaQuery.of(context).size.width,
+        child: check == false
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width - 20,
+                      child: RaisedButton(
+                        color: appBarColor,
+                        textColor: Colors.white,
+                        child:
+                            Text(lang == 1 ? 'Save My Parking' : "حفظ موقفي"),
+                        onPressed: () {
+                          setState(() {
+                            // _getCurrentLocation();
+                            _getLocation();
+                            check = true;
+                            // _getLocation();
+                            // _set();
+                          });
+                        },
                       ),
                     ),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SizedBox(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: RaisedButton(
-                          color: appBarColor,
-                          textColor: Colors.white,
-                          child: Text(lang == 1 ? 'GoTo' : "اذهب إلى"),
-                          onPressed: () {
-                            setState(() {
-                              goToMyCar();
-                            });
-                          },
-                        ),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: RaisedButton(
+                        color: appBarColor,
+                        textColor: Colors.white,
+                        child: Text(lang == 1 ? 'GoTo' : "اذهب إلى"),
+                        onPressed: () {
+                          setState(() {
+                            goToMyCar();
+                          });
+                        },
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: SizedBox(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: RaisedButton(
-                          color: appBarColor,
-                          textColor: Colors.white,
-                          child: Text(lang == 1 ? 'Delete' : "حذف"),
-                          onPressed: () {
-                            setState(() {
-                              removeMyCar();
-                              check = false;
-                            });
-                          },
-                        ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: RaisedButton(
+                        color: appBarColor,
+                        textColor: Colors.white,
+                        child: Text(lang == 1 ? 'Delete' : "حذف"),
+                        onPressed: () {
+                          setState(() {
+                            removeMyCar();
+                            check = false;
+                          });
+                        },
                       ),
                     ),
-                  ],
-                ), // My cards showing in front of the Map's
-        ),
-        appBar: AppBar(
-          backgroundColor: appBarColor,
-          foregroundColor: Colors.black,
-          title: Text(lang == 1 ? 'PARKING' : "موقف سيارات"),
-          elevation: 0.0,
-        ),
-        body: new Container(
-          // height: 1000, // This line solved the issue
-          child: Container(
-            // child: Stack(children: []),
-            child: GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: _initialcameraposition),
-              mapType: MapType.normal,
-              onMapCreated: _onMapCreated,
-              markers: Set<Marker>.of(markers.values),
-              myLocationEnabled: true,
-            ),
-
-            // child: GoogleMap(
-            //   initialCameraPosition: CameraPosition(target: _initialcameraposition),
-            //   mapType: MapType.normal,
-            //   onMapCreated: _onMapCreated,
-            //   myLocationEnabled: true,
-            //   buildingsEnabled: false,
-            //   compassEnabled: false,
-            //   indoorViewEnabled: false,
-            //   liteModeEnabled: false,
-            //   mapToolbarEnabled: false,
-            //   myLocationButtonEnabled: false,
-            //   // mapToolbarEnabled: false,
-            // ),
+                  ),
+                ],
+              ), // My cards showing in front of the Map's
+      ),
+      appBar: AppBar(
+        backgroundColor: appBarColor,
+        foregroundColor: Colors.black,
+        title: Text(lang == 1 ? 'PARKING' : "موقف سيارات"),
+        elevation: 0.0,
+      ),
+      body: new Container(
+        // height: 1000, // This line solved the issue
+        child: Container(
+          // child: Stack(children: []),
+          child: GoogleMap(
+            initialCameraPosition:
+                CameraPosition(target: _initialcameraposition),
+            mapType: MapType.normal,
+            onMapCreated: _onMapCreated,
+            markers: Set<Marker>.of(markers.values),
+            myLocationEnabled: true,
           ),
+
+          // child: GoogleMap(
+          //   initialCameraPosition: CameraPosition(target: _initialcameraposition),
+          //   mapType: MapType.normal,
+          //   onMapCreated: _onMapCreated,
+          //   myLocationEnabled: true,
+          //   buildingsEnabled: false,
+          //   compassEnabled: false,
+          //   indoorViewEnabled: false,
+          //   liteModeEnabled: false,
+          //   mapToolbarEnabled: false,
+          //   myLocationButtonEnabled: false,
+          //   // mapToolbarEnabled: false,
+          // ),
         ),
       ),
     );
