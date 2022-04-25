@@ -59,7 +59,7 @@ class _ChairpersonMessagePageState extends State<ChairpersonMessagePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('CHAIRPERON MESSAGE',
+          Text('Chair Person Message',
               style: TextStyle(
                 color: textColor,
                 fontWeight: FontWeight.w500,
@@ -71,61 +71,69 @@ class _ChairpersonMessagePageState extends State<ChairpersonMessagePage> {
   }
 
   buildBody() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 50.0),
-                child: ClipPath(
-                  clipper: ArcClipper(),
-                  child: Image.asset(
-                    'assets/images/Chairperson Message.jpg',
-                    width: MediaQuery.of(context).size.width,
-                    height: 250.0,
-                    fit: kIsWeb ? BoxFit.fill : BoxFit.cover,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/Texture.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: ClipPath(
+                    clipper: ArcClipper(),
+                    child: Image.asset(
+                      'assets/images/Chairperson Message.jpg',
+                      width: MediaQuery.of(context).size.width,
+                      height: 250.0,
+                      fit: kIsWeb ? BoxFit.fill : BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: 0.0,
-                left: 16.0,
-                right: 16.0,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Our Authority',
-                          style: TextStyle(fontSize: 25),
-                        ),
-                      ],
-                    )),
-                  ],
+                Positioned(
+                  bottom: 0.0,
+                  left: 16.0,
+                  right: 16.0,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Chair Person Message',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        ],
+                      )),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                // height: 300,
-                child: Text(data),
-              )
-              //   Text(
-              //     '',
-              //     style: TextStyle(
-              //       color: Colors.black45,
-              //       fontSize: 14.0,
-              //     ),
-              //   ),
-              ),
-        ],
+              ],
+            ),
+            Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  // height: 300,
+                  child: Text(data),
+                )
+                //   Text(
+                //     '',
+                //     style: TextStyle(
+                //       color: Colors.black45,
+                //       fontSize: 14.0,
+                //     ),
+                //   ),
+                ),
+          ],
+        ),
       ),
     );
   }

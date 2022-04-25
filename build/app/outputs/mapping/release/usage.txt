@@ -20760,15 +20760,17 @@ androidx.core.view.ViewCompat$AccessibilityViewProperty:
     private final int mContentChangeType
 com.google.android.exoplayer2.mediacodec.MediaCodecAdapter$Factory:
     public static final com.google.android.exoplayer2.mediacodec.MediaCodecAdapter$Factory DEFAULT
-com.google.android.exoplayer2.Player$Listener$-CC:
-    public static void $default$onPlaybackStateChanged(com.google.android.exoplayer2.Player$Listener,int)
-    public static void $default$onPlayerError(com.google.android.exoplayer2.Player$Listener,com.google.android.exoplayer2.PlaybackException)
-com.google.android.exoplayer2.source.MediaSourceEventListener$-CC
+io.flutter.plugin.common.BinaryMessenger$-CC
+com.google.android.exoplayer2.audio.AudioSink$-CC
 com.google.android.exoplayer2.drm.DrmSession$-CC:
     public static boolean $default$playClearSamplesWithoutKeys(com.google.android.exoplayer2.drm.DrmSession)
-com.google.android.exoplayer2.analytics.AnalyticsListener$-CC
-com.google.android.exoplayer2.ExoPlayer$AudioOffloadListener$-CC:
-    public static void $default$onExperimentalSleepingForOffloadChanged(com.google.android.exoplayer2.ExoPlayer$AudioOffloadListener,boolean)
+com.google.android.exoplayer2.drm.DrmSessionEventListener$-CC:
+    public static void $default$onDrmSessionAcquired(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId,int)
+    public static void $default$onDrmKeysLoaded(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
+    public static void $default$onDrmSessionManagerError(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId,java.lang.Exception)
+    public static void $default$onDrmKeysRestored(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
+    public static void $default$onDrmKeysRemoved(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
+    public static void $default$onDrmSessionReleased(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
 com.google.android.exoplayer2.video.VideoRendererEventListener$-CC:
     public static void $default$onVideoEnabled(com.google.android.exoplayer2.video.VideoRendererEventListener,com.google.android.exoplayer2.decoder.DecoderCounters)
     public static void $default$onVideoDecoderInitialized(com.google.android.exoplayer2.video.VideoRendererEventListener,java.lang.String,long,long)
@@ -20780,16 +20782,14 @@ com.google.android.exoplayer2.video.VideoRendererEventListener$-CC:
     public static void $default$onVideoDecoderReleased(com.google.android.exoplayer2.video.VideoRendererEventListener,java.lang.String)
     public static void $default$onVideoDisabled(com.google.android.exoplayer2.video.VideoRendererEventListener,com.google.android.exoplayer2.decoder.DecoderCounters)
     public static void $default$onVideoCodecError(com.google.android.exoplayer2.video.VideoRendererEventListener,java.lang.Exception)
+com.google.android.exoplayer2.Player$Listener$-CC:
+    public static void $default$onPlaybackStateChanged(com.google.android.exoplayer2.Player$Listener,int)
+    public static void $default$onPlayerError(com.google.android.exoplayer2.Player$Listener,com.google.android.exoplayer2.PlaybackException)
+com.google.android.exoplayer2.ExoPlayer$AudioOffloadListener$-CC:
+    public static void $default$onExperimentalSleepingForOffloadChanged(com.google.android.exoplayer2.ExoPlayer$AudioOffloadListener,boolean)
+com.google.android.exoplayer2.source.MediaSourceEventListener$-CC
 androidx.lifecycle.DefaultLifecycleObserver$-CC
-com.google.android.exoplayer2.drm.DrmSessionEventListener$-CC:
-    public static void $default$onDrmSessionAcquired(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId,int)
-    public static void $default$onDrmKeysLoaded(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
-    public static void $default$onDrmSessionManagerError(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId,java.lang.Exception)
-    public static void $default$onDrmKeysRestored(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
-    public static void $default$onDrmKeysRemoved(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
-    public static void $default$onDrmSessionReleased(com.google.android.exoplayer2.drm.DrmSessionEventListener,int,com.google.android.exoplayer2.source.MediaSource$MediaPeriodId)
-io.flutter.plugin.common.BinaryMessenger$-CC
-com.google.android.exoplayer2.audio.AudioSink$-CC
+com.google.android.exoplayer2.audio.AudioSink$Listener$-CC
 com.google.android.exoplayer2.audio.AudioRendererEventListener$-CC:
     public static void $default$onAudioEnabled(com.google.android.exoplayer2.audio.AudioRendererEventListener,com.google.android.exoplayer2.decoder.DecoderCounters)
     public static void $default$onAudioDecoderInitialized(com.google.android.exoplayer2.audio.AudioRendererEventListener,java.lang.String,long,long)
@@ -20801,4 +20801,4 @@ com.google.android.exoplayer2.audio.AudioRendererEventListener$-CC:
     public static void $default$onSkipSilenceEnabledChanged(com.google.android.exoplayer2.audio.AudioRendererEventListener,boolean)
     public static void $default$onAudioCodecError(com.google.android.exoplayer2.audio.AudioRendererEventListener,java.lang.Exception)
     public static void $default$onAudioSinkError(com.google.android.exoplayer2.audio.AudioRendererEventListener,java.lang.Exception)
-com.google.android.exoplayer2.audio.AudioSink$Listener$-CC
+com.google.android.exoplayer2.analytics.AnalyticsListener$-CC

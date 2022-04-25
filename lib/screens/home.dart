@@ -60,24 +60,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     setState(() {});
     return Scaffold(
-        backgroundColor: Colors.green[100]?.withOpacity(0.5),
-        body: CustomScrollView(
-          slivers: [
-            // SliverAppBar(
-            //   backgroundColor: appBarColor,
-            //   pinned: true,
-            //   snap: true,
-            //   floating: true,
-            //   title: getAppBar(),
-            // ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => buildBody(),
-                childCount: 1,
-              ),
-            )
-          ],
-        ));
+        // backgroundColor: Colors.green[100]?.withOpacity(0.5),
+        body: Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/Texture.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: CustomScrollView(
+        slivers: [
+          // SliverAppBar(
+          //   backgroundColor: appBarColor,
+          //   pinned: true,
+          //   snap: true,
+          //   floating: true,
+          //   title: getAppBar(),
+          // ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => buildBody(),
+              childCount: 1,
+            ),
+          )
+        ],
+      ),
+    ));
   }
 
   // Widget getAppBar() {

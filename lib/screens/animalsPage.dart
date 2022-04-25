@@ -1,19 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 import '../theme/color.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/global.dart';
-import 'detailWildlife.dart';
-import 'package:video_player/video_player.dart';
 
 class AnimalsPage extends StatefulWidget {
   @override
   _AnimalsPageState createState() => new _AnimalsPageState();
 }
-
-late VideoPlayerController _controller;
 
 var COLORS = [
   Color(0xFFEF7A85),
@@ -25,10 +22,26 @@ var COLORS = [
 
 class _AnimalsPageState extends State<AnimalsPage> {
   // ignore: non_constant_identifier_names
+  late VideoPlayerController _controller;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // _controller =
+    //     VideoPlayerController.asset("assests/videos/Desert Monitor.mp4")
+    //       ..initialize().then(
+    //         (_) {
+    //           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //           setState(() {});
+    //         },
+    //       );
+    // _controller = VideoPlayerController.network(
+    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
+    //   ..initialize().then((_) {
+    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //     setState(() {});
+    //   });
   }
 
   List data = [
@@ -308,23 +321,31 @@ class _AnimalsPageState extends State<AnimalsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: appBarColor,
-            pinned: true,
-            snap: true,
-            foregroundColor: Colors.black,
-            floating: true,
-            title: getAppBar(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/Texture.jpg"),
+            fit: BoxFit.cover,
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => buildBody(context, data),
-              childCount: 1,
+        ),
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: appBarColor,
+              pinned: true,
+              snap: true,
+              foregroundColor: Colors.black,
+              floating: true,
+              title: getAppBar(),
             ),
-          ),
-        ],
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => buildBody(context, data),
+                childCount: 1,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -356,13 +377,6 @@ buildBody(context, data) {
     primary: true,
     itemCount: data.length,
     itemBuilder: (BuildContext content, int index) {
-      data[index]['video'] == ''
-          ? null
-          : (_controller = VideoPlayerController.asset(data[index]["video"])
-            ..initialize().then((_) {
-              // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-              // setState(() {});
-            }));
       return Column(
         children: [
           AwesomeListItem(
@@ -381,23 +395,6 @@ buildBody(context, data) {
     },
   );
 }
-
-// class MyClipper extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     Path p = new Path();
-//     p.lineTo(size.width, 0.0);
-//     p.lineTo(size.width, size.height / 5.75);
-//     p.lineTo(0.0, size.height / 3.75);
-//     p.close();
-//     return p;
-//   }
-
-//   @override
-//   bool shouldReclip(CustomClipper oldClipper) {
-//     return true;
-//   }
-// }
 
 class AwesomeListItem extends StatefulWidget {
   String title;
@@ -422,120 +419,204 @@ class AwesomeListItem extends StatefulWidget {
 }
 
 class _AwesomeListItemState extends State<AwesomeListItem> {
+  late VideoPlayerController _videoPlayerController;
+  bool startedPlaying = false;
   @override
+  void initState() {
+    super.initState();
+
+    // _videoPlayerController = VideoPlayerController.asset(widget.video);
+    // _videoPlayerController.addListener(() {
+    //   if (startedPlaying && !_videoPlayerController.value.isPlaying) {
+    //     Navigator.pop(context);
+    //   }
+    // });
+  }
+
+  @override
+  // void dispose() {
+  //   _videoPlayerController.dispose();
+  //   super.dispose();
+  // }
+
+  // Future<bool> started() async {
+  //   await _videoPlayerController.initialize();
+  //   await _videoPlayerController.play();
+  //   startedPlaying = true;
+  //   return true;
+  // }
+
   Widget build(BuildContext context) {
-    return new Row(
-      children: <Widget>[
-        new Container(width: 10.0, height: 190.0, color: widget.color),
-        new Expanded(
-          child: new Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => DetailsPage(
-                      //       id: 1,
-                      //       title: widget.title,
-                      //       content: widget.content,
-                      //       image: widget.image,
-                      //     ),
-                      //   ),
-                      // );
-                    });
-                  },
-                  child: new Text(
-                    lang != 1 ? widget.titleAR : widget.title,
-                    style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                new Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: new Text(
-                    lang != 1 ? widget.contentAR : widget.content,
-                    style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                  // color: Colors.red,
-                  height: 30,
-                  width: 100,
-                  child: ButtonWidget(
-                    text: 'Play',
-                    backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
-                    textColor: const [
-                      Colors.white,
-                      Colors.white,
-                    ],
-                    onPressed: () {
+    return Card(
+      elevation: 10,
+      child: new Row(
+        children: <Widget>[
+          new Container(width: 10.0, height: 190.0, color: widget.color),
+          new Expanded(
+            child: new Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
                       setState(() {
-                        _controller.play();
-                        // VideoPlayer(_controller);
-                        // _controller.value.isInitialized
-                        //     ? AspectRatio(
-                        //         aspectRatio: _controller.value.aspectRatio,
-                        //         child: VideoPlayer(_controller),
-                        //       )
-                        //     : Container();
+                        // _videoPlayerController =
+                        //     VideoPlayerController.asset(widget.video)
+                        //       ..initialize().then(
+                        //         (_) {
+                        //           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+                        //           setState(() {});
+                        //         },
+                        //       );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => DetailsPage(
+                        //       id: 1,
+                        //       title: widget.title,
+                        //       content: widget.content,
+                        //       image: widget.image,
+                        //     ),
+                        //   ),
+                        // );
                       });
                     },
+                    child: new Text(
+                      lang != 1 ? widget.titleAR : widget.title,
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: new Text(
+                      lang != 1 ? widget.contentAR : widget.content,
+                      style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    // color: Colors.red,
+                    height: 30,
+                    width: 100,
+                    child:
+
+                        // Center(
+                        //   child: FutureBuilder<bool>(
+                        //     future: started(),
+                        //     builder: (BuildContext context,
+                        //         AsyncSnapshot<bool> snapshot) {
+                        //       if (snapshot.data == true) {
+                        //         return AspectRatio(
+                        //           aspectRatio:
+                        //               _videoPlayerController.value.aspectRatio,
+                        //           child: VideoPlayer(_videoPlayerController),
+                        //         );
+                        //       } else {
+                        //         return const Text('waiting for video to load');
+                        //       }
+                        //     },
+                        //   ),
+                        // ),
+                        ButtonWidget(
+                      text: 'Play',
+                      backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
+                      textColor: const [
+                        Colors.white,
+                        Colors.white,
+                      ],
+                      onPressed: () {
+                        setState(() {
+                          // _videoPlayerController.initialize();
+                          // _videoPlayerController.play();
+                          // startedPlaying = true;
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (context) {
+                          //       return Center(
+                          //         child: Container(
+                          //           child: SizedBox(
+                          //             height: 500,
+                          //             width: 500,
+                          //             child: AspectRatio(
+                          //               aspectRatio: _videoPlayerController
+                          //                   .value.aspectRatio,
+                          //               child:
+                          //                   VideoPlayer(_videoPlayerController),
+                          //             ),
+                          //             // _videoPlayerController
+                          //             //         .value.isInitialized
+                          //             //     ? AspectRatio(
+                          //             //         aspectRatio:
+                          //             //             _videoPlayerController
+                          //             //                 .value.aspectRatio,
+                          //             //         child: VideoPlayer(
+                          //             //             _videoPlayerController),
+                          //             //       )
+                          //             //     : Container(),
+                          //           ),
+                          //         ),
+                          //       );
+                          //     });
+                          // _controller.play();
+                          // VideoPlayer(_controller);
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          new Container(
+            height: 150.0,
+            width: 150.0,
+            color: Colors.white,
+            child: Stack(
+              children: <Widget>[
+                new Transform.translate(
+                  offset: new Offset(lang != 1 ? 20.0 : 50.0, 0.0),
+                  child: new Container(
+                    height: 100.0,
+                    width: 100.0,
+                    color: widget.color,
+                  ),
+                ),
+                new Transform.translate(
+                  offset: Offset(10.0, 20.0),
+                  child: new Card(
+                    elevation: 20.0,
+                    child: new Container(
+                      height: 120.0,
+                      width: 120.0,
+                      decoration: new BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              width: 10.0,
+                              color: Colors.white,
+                              style: BorderStyle.solid),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              widget.image,
+                            ),
+                          )),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        new Container(
-          height: 150.0,
-          width: 150.0,
-          color: Colors.white,
-          child: Stack(
-            children: <Widget>[
-              new Transform.translate(
-                offset: new Offset(lang != 1 ? 20.0 : 50.0, 0.0),
-                child: new Container(
-                  height: 100.0,
-                  width: 100.0,
-                  color: widget.color,
-                ),
-              ),
-              new Transform.translate(
-                offset: Offset(10.0, 20.0),
-                child: new Card(
-                  elevation: 20.0,
-                  child: new Container(
-                    height: 120.0,
-                    width: 120.0,
-                    decoration: new BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                            width: 10.0,
-                            color: Colors.white,
-                            style: BorderStyle.solid),
-                        image: DecorationImage(
-                          image: AssetImage(
-                            widget.image,
-                          ),
-                        )),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

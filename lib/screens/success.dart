@@ -37,7 +37,7 @@ class _SuccessState extends State<Success> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
             child: Text(
-              'Your payment was done successfully',
+              'Your payment has been send to your email successfully',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18.0,

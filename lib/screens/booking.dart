@@ -1,11 +1,14 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:epaa_app/screens/payment.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../theme/color.dart';
 import '../widgets/Chipss.dart';
 import '../widgets/button_widget.dart';
+import '../widgets/global.dart';
 
 class BookingPage extends StatefulWidget {
   final String title;
@@ -20,6 +23,7 @@ class _BookingPageState extends State<BookingPage> {
   final GlobalKey<ChipsInputState> _chipTeacherKey = GlobalKey();
 
   final GlobalKey<FormState> _registerEmailKey = GlobalKey();
+  final format = DateFormat("yyyy-MM-dd");
   String schoolName = '';
   String teacherNumber = '';
 
@@ -31,6 +35,47 @@ class _BookingPageState extends State<BookingPage> {
   int? totalDiscountTeacher = 0;
   List<String>? studentsName;
   List<String>? teacherName;
+  DateFormat selectedTime = DateFormat("HH:mm");
+  DateTime selectedDate = DateTime.now();
+  final dateController = TextEditingController();
+  final timeController = TextEditingController();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        dateController.text = selectedDate.month.toString() +
+            " - " +
+            selectedDate.day.toString() +
+            " - " +
+            selectedDate.year.toString();
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+
+      // initialDate: selectedDate,
+      // firstDate: DateTime(2015, 8),
+      // lastDate: DateTime(2101),
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null && pickedTime != selectedTime) {
+      setState(() {
+        // selectedTime = pickedTime as DateFormat;
+        timeController.text = pickedTime.format(context);
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -90,134 +135,225 @@ class _BookingPageState extends State<BookingPage> {
       //     ),
       //   ],
       // ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: ButtonWidget(
-              text: 'Pay',
-              backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
-              textColor: const [
-                Colors.white,
-                Colors.white,
-              ],
-              onPressed: () {
-                _registerEmailKey.currentState?.save();
-                print(teacherEmail);
-                setState(() {
-                  totalStudent = _chipKey.currentState?.getTags().length;
 
-                  studentsName = _chipKey.currentState?.getTags();
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          height: 46,
+          margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
+          child: RaisedButton(
+            color: appBarColor,
+            padding: EdgeInsets.all(15.0),
+            elevation: 5,
+            textColor: Colors.white,
+            child: Text(lang == 1 ? 'Pay' : 'ادقغ'),
+            onPressed: () {
+              _registerEmailKey.currentState?.save();
+              print(teacherEmail);
+              setState(() {
+                totalStudent = _chipKey.currentState?.getTags().length;
 
-                  totalTeacher = _chipTeacherKey.currentState?.getTags().length;
-                  teacherName = _chipTeacherKey.currentState?.getTags();
-                  if (totalStudent! >= 20) {
-                    totalDiscountTeacher = totalTeacher! - 1;
-                    totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
-                  } else {
-                    totalDiscountTeacher = totalTeacher;
-                    totalAmount = totalStudent! * 2 + totalTeacher! * 5;
-                  }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PaymentPage(
-                        totalStudent: totalStudent,
-                        schoolName: schoolName,
-                        teacherNumber: teacherNumber,
-                        studentsName: studentsName,
-                        teacherEmail: teacherEmail,
-                        teacherName: teacherName,
-                        totalTeacher: totalTeacher,
-                        totalDiscountTeacher: totalDiscountTeacher,
-                        totalAmount: totalAmount,
-                      ),
+                studentsName = _chipKey.currentState?.getTags();
+
+                totalTeacher = _chipTeacherKey.currentState?.getTags().length;
+                teacherName = _chipTeacherKey.currentState?.getTags();
+                if (totalStudent! >= 20) {
+                  totalDiscountTeacher = totalTeacher! - 1;
+                  totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
+                } else {
+                  totalDiscountTeacher = totalTeacher;
+                  totalAmount = totalStudent! * 2 + totalTeacher! * 5;
+                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PaymentPage(
+                      time: timeController.text,
+                      date: selectedDate.month.toString() +
+                          " - " +
+                          selectedDate.day.toString() +
+                          " - " +
+                          selectedDate.year.toString(),
+                      totalStudent: totalStudent,
+                      schoolName: schoolName,
+                      teacherNumber: teacherNumber,
+                      studentsName: studentsName,
+                      teacherEmail: teacherEmail,
+                      teacherName: teacherName,
+                      totalTeacher: totalTeacher,
+                      totalDiscountTeacher: totalDiscountTeacher,
+                      totalAmount: totalAmount,
                     ),
-                  );
-                });
-              },
+                  ),
+                );
+              });
+            },
+          ),
+        ),
+      ),
+      // bottomNavigationBar: Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(bottom: 20.0),
+      //       child: ButtonWidget(
+      //         text: 'Pay',
+      //         backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
+      //         textColor: const [
+      //           Colors.white,
+      //           Colors.white,
+      //         ],
+      //         onPressed: () {
+      //           _registerEmailKey.currentState?.save();
+      //           print(teacherEmail);
+      //           setState(() {
+      //             totalStudent = _chipKey.currentState?.getTags().length;
+
+      //             studentsName = _chipKey.currentState?.getTags();
+
+      //             totalTeacher = _chipTeacherKey.currentState?.getTags().length;
+      //             teacherName = _chipTeacherKey.currentState?.getTags();
+      //             if (totalStudent! >= 20) {
+      //               totalDiscountTeacher = totalTeacher! - 1;
+      //               totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
+      //             } else {
+      //               totalDiscountTeacher = totalTeacher;
+      //               totalAmount = totalStudent! * 2 + totalTeacher! * 5;
+      //             }
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                 builder: (context) => PaymentPage(
+      //                   time: timeController.text,
+      //                   date: selectedDate.month.toString() +
+      //                       " - " +
+      //                       selectedDate.day.toString() +
+      //                       " - " +
+      //                       selectedDate.year.toString(),
+      //                   totalStudent: totalStudent,
+      //                   schoolName: schoolName,
+      //                   teacherNumber: teacherNumber,
+      //                   studentsName: studentsName,
+      //                   teacherEmail: teacherEmail,
+      //                   teacherName: teacherName,
+      //                   totalTeacher: totalTeacher,
+      //                   totalDiscountTeacher: totalDiscountTeacher,
+      //                   totalAmount: totalAmount,
+      //                 ),
+      //               ),
+      //             );
+      //           });
+      //         },
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      body: GestureDetector(
+        onTap: () {
+          setState(() {
+            FocusManager.instance.primaryFocus?.unfocus();
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/Texture.jpg"),
+              fit: BoxFit.cover,
             ),
           ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 50,
-                  child: Text(
-                    // '',
-                    widget.title,
-                    style: TextStyle(fontSize: 25),
+          child: ListView(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 50,
+                    child: Text(
+                      // '',
+                      widget.title,
+                      style: TextStyle(fontSize: 25),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            buildTextField(
-              "School Name",
-              Icons.school,
-              size,
-              (value) {
-                setState(() {
-                  schoolName = value;
-                });
-              },
-            ),
-            buildTextFieldTeacher(
-              "Teacher's Name",
-              size,
-              (value) {
-                setState(() {});
-              },
-            ),
-            buildTextField(
-              "Teacher Number",
-              Icons.phone,
-              size,
-              (value) {
-                setState(() {
-                  teacherNumber = value;
-                });
-              },
-            ),
-            buildTextFieldTeacherEmail(
-              "Teacher Email",
-              Icons.email,
-              size,
-              (value) {
-                setState(() {
-                  teacherEmail = value;
-                });
-              },
-            ),
-            buildTextFieldStudent(
-              "Student's Name",
-              size,
-              (value) {
-                setState(() {});
-              },
-            ),
-            buildTextFieldStudentPhone(
-              "Student's Number",
-              size,
-              (value) {
-                setState(() {});
-              },
-            ),
-            SizedBox(
-              height: 100,
-            ),
-          ],
+                ],
+              ),
+              buildTextField(
+                "School Name",
+                Icons.school,
+                size,
+                (value) {
+                  setState(() {
+                    schoolName = value;
+                  });
+                },
+              ),
+              buildTextFieldTeacher(
+                "Teacher's Name",
+                size,
+                (value) {
+                  setState(() {});
+                },
+              ),
+              buildTextField(
+                "Teacher Number",
+                Icons.phone,
+                size,
+                (value) {
+                  setState(() {
+                    teacherNumber = value;
+                  });
+                },
+              ),
+              buildTextFieldTeacherEmail(
+                "Teacher Email",
+                Icons.email,
+                size,
+                (value) {
+                  setState(() {
+                    teacherEmail = value;
+                  });
+                },
+              ),
+              buildTextFieldStudent(
+                "Student's Name",
+                size,
+                (value) {
+                  setState(() {});
+                },
+              ),
+              buildTextFieldStudentPhone(
+                "Student's Number",
+                size,
+                (value) {
+                  setState(() {});
+                },
+              ),
+              buildTextFieldDate(
+                "Pick Date",
+                Icons.date_range,
+                size,
+                (value) {
+                  setState(() {
+                    teacherNumber = value;
+                  });
+                },
+              ),
+              buildTextFieldTime(
+                "Pick Time",
+                Icons.timer,
+                size,
+                (value) {
+                  setState(() {
+                    teacherNumber = value;
+                  });
+                },
+              ),
+              SizedBox(
+                height: 100,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -299,7 +435,6 @@ class _BookingPageState extends State<BookingPage> {
         width: size.width * 0.9,
         height: size.height * 0.06,
         decoration: BoxDecoration(
-          color: const Color(0xffF7F8F8),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Form(
@@ -311,6 +446,12 @@ class _BookingPageState extends State<BookingPage> {
             style: TextStyle(color: Colors.black),
             onSaved: onSaved,
             decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black45),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black45),
+              ),
               errorStyle: const TextStyle(height: 0),
               hintStyle: const TextStyle(
                 color: Color(0xffADA4A5),
@@ -348,7 +489,6 @@ class _BookingPageState extends State<BookingPage> {
         width: size.width * 0.9,
         height: size.height * 0.06,
         decoration: BoxDecoration(
-          color: const Color(0xffF7F8F8),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Form(
@@ -357,6 +497,12 @@ class _BookingPageState extends State<BookingPage> {
             style: TextStyle(color: Colors.black),
             onSaved: onSaved,
             decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black45),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black45),
+              ),
               errorStyle: const TextStyle(height: 0),
               hintStyle: const TextStyle(
                 color: Color(0xffADA4A5),
@@ -373,6 +519,124 @@ class _BookingPageState extends State<BookingPage> {
                 child: Icon(
                   icon,
                   color: const Color(0xff7B6F72),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFieldDate(
+    String hintText,
+    IconData icon,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: Container(
+        width: size.width * 0.9,
+        height: size.height * 0.06,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: GestureDetector(
+          onTap: () => _selectDate(context),
+          child: Form(
+            // key: _registerKey,
+            child: TextFormField(
+              controller: dateController,
+              enabled: false,
+              style: TextStyle(color: Colors.black),
+              onSaved: onSaved,
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black45),
+                ),
+                disabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black45),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black45),
+                ),
+                errorStyle: const TextStyle(height: 0),
+                hintStyle: const TextStyle(
+                  color: Color(0xffADA4A5),
+                ),
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(
+                  top: size.height * 0.02,
+                ),
+                hintText: hintText,
+                prefixIcon: Padding(
+                  padding: EdgeInsets.only(
+                    top: size.height * 0.005,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: const Color(0xff7B6F72),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFieldTime(
+    String hintText,
+    IconData icon,
+    size,
+    onSaved,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: size.height * 0.025),
+      child: Container(
+        width: size.width * 0.9,
+        height: size.height * 0.06,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: GestureDetector(
+          onTap: () => _selectTime(context),
+          child: Form(
+            // key: _registerKey,
+            child: TextFormField(
+              controller: timeController,
+              enabled: false,
+              style: TextStyle(color: Colors.black),
+              onSaved: onSaved,
+              decoration: InputDecoration(
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black45),
+                ),
+                disabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black45),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black45),
+                ),
+                errorStyle: const TextStyle(height: 0),
+                hintStyle: const TextStyle(
+                  color: Color(0xffADA4A5),
+                ),
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(
+                  top: size.height * 0.02,
+                ),
+                hintText: hintText,
+                prefixIcon: Padding(
+                  padding: EdgeInsets.only(
+                    top: size.height * 0.005,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: const Color(0xff7B6F72),
+                  ),
                 ),
               ),
             ),

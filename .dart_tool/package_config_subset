@@ -70,6 +70,10 @@ cupertino_icons
 2.12
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.4/
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.4/lib/
+datetime_picker_formfield
+2.12
+file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/datetime_picker_formfield-2.0.0/
+file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/datetime_picker_formfield-2.0.0/lib/
 fake_async
 2.12
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/fake_async-1.2.0/
@@ -94,6 +98,10 @@ flutter_chips_input
 2.12
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_chips_input-1.10.0/
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_chips_input-1.10.0/lib/
+flutter_easyloading
+2.12
+file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_easyloading-3.0.3/
+file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_easyloading-3.0.3/lib/
 flutter_keyboard_visibility
 2.12
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_keyboard_visibility-5.2.0/
@@ -118,6 +126,10 @@ flutter_plugin_android_lifecycle
 2.12
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_plugin_android_lifecycle-2.0.5/
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_plugin_android_lifecycle-2.0.5/lib/
+flutter_spinkit
+2.12
+file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_spinkit-5.1.0/
+file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_spinkit-5.1.0/lib/
 flutter_svg
 2.12
 file:///Users/user/Developer/flutter/.pub-cache/hosted/pub.flutter-io.cn/flutter_svg-0.22.0/

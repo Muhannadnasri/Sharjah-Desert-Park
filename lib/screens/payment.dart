@@ -5,6 +5,7 @@ import 'package:epaa_app/screens/success.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -12,6 +13,7 @@ import 'package:mailer/smtp_server.dart';
 import '../theme/color.dart';
 import '../widgets/Chipss.dart';
 import '../widgets/button_widget.dart';
+import '../widgets/global.dart';
 import '../widgets/text-field-input.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -24,12 +26,15 @@ class PaymentPage extends StatefulWidget {
   final String teacherNumber;
   final List<String>? studentsName;
   final List<String>? teacherName;
+  final String time;
+  final String date;
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
   const PaymentPage(
       {Key? key,
       this.totalStudent,
+      required this.time,
       this.totalTeacher,
       this.totalDiscountTeacher,
       this.totalAmount,
@@ -37,12 +42,15 @@ class PaymentPage extends StatefulWidget {
       required this.teacherNumber,
       this.studentsName,
       required this.teacherEmail,
-      this.teacherName})
+      this.teacherName,
+      required this.date})
       : super(key: key);
 }
 
 class _PaymentPageState extends State<PaymentPage> {
   mailSend() async {
+    EasyLoading.showProgress(0.3, status: 'loading...');
+
     // // final Email email = Email(
     //   body:
     //       "Total Student : ${widget.totalStudent} , Student's Name: ${widget.studentsName} ",
@@ -65,7 +73,7 @@ class _PaymentPageState extends State<PaymentPage> {
       ..subject = 'Sharjah Desert Park Payment Details}'
       ..text = 'This is Sharjah Desert Park Payment Details .'
       ..html =
-          "<h1>Welecome ${widget.teacherName?.first.toString()} to Sharjah Desert Park </h1>\n<p>Total Student's : ${widget.studentsName} (${widget.totalStudent})</p>\n<p>Total Teacher's : ${widget.teacherName} (${widget.totalTeacher})</p> \n<p>Total Amount's : ${widget.totalAmount} AED </p>";
+          "<h1>Dear V ${widget.teacherName?.first.toString()}, Welcome to Sharjah Desert Park </h1> \n <h2>Your booking confirmed for this Date ${widget.date} and Time ${widget.time} </h2>\n<p>Total Student's : ${widget.studentsName} (${widget.totalStudent})</p>\n<p>Total Teacher's : ${widget.teacherName} (${widget.totalTeacher})</p> \n<p>Total Amount's : ${widget.totalAmount} AED </p>";
 
     try {
       final sendReport = await send(message, smtpServer);
@@ -107,6 +115,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
     // Send the first message
     await connection.send(message);
+    EasyLoading.dismiss();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -130,77 +139,114 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomSheet: Padding(
-        padding: const EdgeInsets.only(bottom: 30.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              height: size.height * 0.07,
-              width: size.width * 0.4,
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    mailSend();
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    gradient: LinearGradient(
-                      stops: const [0.4, 2],
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                      colors: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
-                    ),
-                  ),
-                  child: Align(
-                    child: Text(
-                      'Pay Online',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.height * 0.02,
-                          color: Colors.white),
-                    ),
-                  ),
+      bottomSheet: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 40.0),
+          margin: EdgeInsets.symmetric(horizontal: 22),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                height: 46,
+                margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
+                child: RaisedButton(
+                  color: appBarColor,
+                  padding: EdgeInsets.all(15.0),
+                  elevation: 5,
+                  textColor: Colors.white,
+                  child: Text(lang == 1 ? 'Pay Online' : 'دفع اونلاين'),
+                  onPressed: () {
+                    // Navigator.pop(context);
+                    setState(() {
+                      mailSend();
+                    });
+                  },
                 ),
               ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            SizedBox(
-              height: size.height * 0.07,
-              width: size.width * 0.4,
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    mailSend();
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    gradient: LinearGradient(
-                      stops: const [0.4, 2],
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                      colors: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
-                    ),
-                  ),
-                  child: Align(
-                    child: Text(
-                      'Pay on Site',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: size.height * 0.02,
-                          color: Colors.white),
-                    ),
-                  ),
+              Container(
+                height: 46,
+                margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
+                child: RaisedButton(
+                  color: appBarColor,
+                  padding: EdgeInsets.all(15.0),
+                  elevation: 5,
+                  textColor: Colors.white,
+                  child: Text(lang == 1 ? 'Pay on Site' : 'دفع في المركز'),
+                  onPressed: () {
+                    // Navigator.pop(context);
+                    setState(() {
+                      mailSend();
+                    });
+                  },
                 ),
               ),
-            ),
-          ],
+              // SizedBox(
+              //   height: size.height * 0.07,
+              //   width: size.width * 0.4,
+              //   child: InkWell(
+              //     onTap: () {
+              //       setState(() {
+              //         mailSend();
+              //       });
+              //     },
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15.0),
+              //         gradient: LinearGradient(
+              //           stops: const [0.4, 2],
+              //           begin: Alignment.centerRight,
+              //           end: Alignment.centerLeft,
+              //           colors: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
+              //         ),
+              //       ),
+              //       child: Align(
+              //         child: Text(
+              //           'Pay Online',
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: size.height * 0.02,
+              //               color: Colors.white),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   width: 20,
+              // ),
+              // SizedBox(
+              //   height: size.height * 0.07,
+              //   width: size.width * 0.4,
+              //   child: InkWell(
+              //     onTap: () {
+              //       setState(() {
+              //         mailSend();
+              //       });
+              //     },
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15.0),
+              //         gradient: LinearGradient(
+              //           stops: const [0.4, 2],
+              //           begin: Alignment.centerRight,
+              //           end: Alignment.centerLeft,
+              //           colors: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
+              //         ),
+              //       ),
+              //       child: Align(
+              //         child: Text(
+              //           'Pay on Site',
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: size.height * 0.02,
+              //               color: Colors.white),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(
@@ -215,7 +261,10 @@ class _PaymentPageState extends State<PaymentPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          image: DecorationImage(
+            image: AssetImage("assets/images/Texture.jpg"),
+            fit: BoxFit.cover,
+          ),
         ),
         child: ListView(
           children: [

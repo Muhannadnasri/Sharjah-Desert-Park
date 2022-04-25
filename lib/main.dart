@@ -1,8 +1,10 @@
 import 'dart:async';
 
-import 'package:epaa_app/screens/visit%20and%20booking.dart';
+import 'package:epaa_app/screens/bookingFees.dart';
+import 'package:epaa_app/screens/visitTime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:epaa_app/screens/chairpersonMessage.dart';
@@ -66,6 +68,7 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
           primaryColor: p,
         ),
+        builder: EasyLoading.init(),
         home: const Zoom());
   }
 }
@@ -228,7 +231,7 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
                       height: 35,
                     ),
                     title: Text(
-                      lang == 1 ? " Booking and Visit" : "مواعيد الزيارات ",
+                      lang == 1 ? "Visit Time" : "مواعيد الزيارات ",
                     ),
                     onTap: () {
                       setState(() {
@@ -236,7 +239,7 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => VisitBookingPage(),
+                            builder: (context) => VisitTimePage(),
                           ),
                         );
                       });
@@ -250,6 +253,37 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
                     thickness: 0.4,
                     color: Color.fromARGB(255, 54, 54, 54),
                   ),
+                  ListTile(
+                    dense: true,
+                    textColor: Colors.black54,
+                    leading: Image.asset(
+                      'assets/icons/info.png',
+                      height: 35,
+                    ),
+                    title: Text(
+                      lang == 1 ? "Booking Fees" : "رسوم الحجز",
+                    ),
+                    onTap: () {
+                      setState(() {
+                        // Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookingFeesPage(),
+                          ),
+                        );
+                      });
+                      z.close!();
+
+                      // logOut(context);
+                    },
+                  ),
+
+                  Divider(
+                    thickness: 0.4,
+                    color: Color.fromARGB(255, 54, 54, 54),
+                  ),
+
                   ListTile(
                     dense: true,
                     textColor: Colors.black54,
@@ -391,24 +425,24 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
                       lang == 1 ? "About Us" : "معلومات عنا ",
                     ),
                   ),
-                  Divider(
-                    thickness: 0.4,
-                    color: Color.fromARGB(255, 54, 54, 54),
-                  ),
-                  ListTile(
-                    dense: true,
-                    textColor: Colors.black54,
-                    leading: Image.asset(
-                      'assets/icons/do.png',
-                      height: 35,
-                    ),
-                    title: Text(
-                      lang == 1 ? "Do's & Don'ts" : "افعل و لا تفعل ",
-                    ),
-                    onTap: () {
-                      // logOut(context);
-                    },
-                  ),
+                  // Divider(
+                  //   thickness: 0.4,
+                  //   color: Color.fromARGB(255, 54, 54, 54),
+                  // ),
+                  // ListTile(
+                  //   dense: true,
+                  //   textColor: Colors.black54,
+                  //   leading: Image.asset(
+                  //     'assets/icons/do.png',
+                  //     height: 35,
+                  //   ),
+                  //   title: Text(
+                  //     lang == 1 ? "Do's & Don'ts" : "افعل و لا تفعل ",
+                  //   ),
+                  //   onTap: () {
+                  //     // logOut(context);
+                  //   },
+                  // ),
                   // Divider(
                   //   thickness: 0.4,
                   //   color: Color.fromARGB(255, 54, 54, 54),
