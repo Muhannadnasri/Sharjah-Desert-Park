@@ -139,9 +139,8 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomSheet: SafeArea(
+      bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(bottom: 40.0),
           margin: EdgeInsets.symmetric(horizontal: 22),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

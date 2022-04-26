@@ -279,7 +279,7 @@ class _BookingPageState extends State<BookingPage> {
                 ],
               ),
               buildTextField(
-                "School Name",
+                lang == 1 ? "School Name" : "اسم المدرسة",
                 Icons.school,
                 size,
                 (value) {
@@ -289,14 +289,14 @@ class _BookingPageState extends State<BookingPage> {
                 },
               ),
               buildTextFieldTeacher(
-                "Teacher's Name",
+                lang == 1 ? "Teacher's Name" : "اسم المدرس",
                 size,
                 (value) {
                   setState(() {});
                 },
               ),
               buildTextField(
-                "Teacher Number",
+                lang == 1 ? "Teacher Number" : "رقم المدرس",
                 Icons.phone,
                 size,
                 (value) {
@@ -306,7 +306,7 @@ class _BookingPageState extends State<BookingPage> {
                 },
               ),
               buildTextFieldTeacherEmail(
-                "Teacher Email",
+                lang == 1 ? "Teacher Email" : "البريد الالكتروني المدرس",
                 Icons.email,
                 size,
                 (value) {
@@ -330,7 +330,7 @@ class _BookingPageState extends State<BookingPage> {
                 },
               ),
               buildTextFieldDate(
-                "Pick Date",
+                lang == 1 ? "Pick Date" : "اختر التاريخ",
                 Icons.date_range,
                 size,
                 (value) {
@@ -340,7 +340,7 @@ class _BookingPageState extends State<BookingPage> {
                 },
               ),
               buildTextFieldTime(
-                "Pick Time",
+                lang == 1 ? "Pick Time" : "اختر الوقت",
                 Icons.timer,
                 size,
                 (value) {
@@ -663,9 +663,9 @@ class _BookingPageState extends State<BookingPage> {
         enabled: true,
         maxChips: 50,
         separator: '\n',
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.all(5),
-          hintText: "Student's Name",
+          hintText: lang == 1 ? "Student's Name" : "اسماء الطلاب",
         ),
         initialTags: const [],
         chipTextValidator: (String value) {
@@ -728,9 +728,9 @@ class _BookingPageState extends State<BookingPage> {
         enabled: true,
         maxChips: 50,
         separator: '\n',
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.all(5),
-          hintText: "Student's Number",
+          hintText: lang == 1 ? "Student's Number" : "ارقام الطلاب",
         ),
         initialTags: const [],
         chipTextValidator: (String value) {
