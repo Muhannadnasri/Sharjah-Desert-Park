@@ -1,20 +1,12 @@
-import 'dart:async';
-
-import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:epaa_app/screens/success.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
 import '../theme/color.dart';
-import '../widgets/Chipss.dart';
-import '../widgets/button_widget.dart';
 import '../widgets/global.dart';
-import '../widgets/text-field-input.dart';
 
 class PaymentPage extends StatefulWidget {
   final int? totalStudent;
@@ -48,9 +40,41 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  mailSend() async {
-    EasyLoading.showProgress(0.3, status: 'loading...');
+  void _showLoading(isLoading) {
+    if (isLoading) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return WillPopScope(
+              onWillPop: null,
+              child: new AlertDialog(
+                  content: new Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 25.0),
+                    child: new CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: appBarColor,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: new Text(
+                        lang == 1 ? 'Please Wait....' : 'الرجاء الإنتظار...'),
+                  )
+                ],
+              )),
+            );
+          });
+    } else {
+      Navigator.pop(context);
+    }
+  }
 
+  mailSend() async {
+    // EasyLoading.showProgress(0.3, status: 'loading...');
+    _showLoading(true);
     // // final Email email = Email(
     //   body:
     //       "Total Student : ${widget.totalStudent} , Student's Name: ${widget.studentsName} ",
@@ -115,7 +139,9 @@ class _PaymentPageState extends State<PaymentPage> {
 
     // Send the first message
     await connection.send(message);
-    EasyLoading.dismiss();
+    _showLoading(false);
+
+    // EasyLoading.dismiss();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -139,112 +165,56 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 22),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                height: 46,
-                margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
-                child: RaisedButton(
-                  color: appBarColor,
-                  padding: EdgeInsets.all(15.0),
-                  elevation: 5,
-                  textColor: Colors.white,
-                  child: Text(lang == 1 ? 'Pay Online' : 'دفع اونلاين'),
-                  onPressed: () {
-                    // Navigator.pop(context);
-                    setState(() {
-                      mailSend();
-                    });
-                  },
-                ),
+      bottomNavigationBar: Container(
+        color: appBarColor,
+        child: SafeArea(
+          bottom: true,
+          child: Material(
+            elevation: 1,
+            color: appBarColor,
+            shadowColor: Colors.black,
+            // color: Color.fromARGB(255, 206, 188, 122),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        mailSend();
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        lang == 1 ? 'Pay Online' : 'دفع اونلاين',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  VerticalDivider(
+                    color: Colors.black26,
+                    thickness: 1,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        mailSend();
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        lang == 1 ? 'Pay on Site' : 'دفع في المركز',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                height: 46,
-                margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
-                child: RaisedButton(
-                  color: appBarColor,
-                  padding: EdgeInsets.all(15.0),
-                  elevation: 5,
-                  textColor: Colors.white,
-                  child: Text(lang == 1 ? 'Pay on Site' : 'دفع في المركز'),
-                  onPressed: () {
-                    // Navigator.pop(context);
-                    setState(() {
-                      mailSend();
-                    });
-                  },
-                ),
-              ),
-              // SizedBox(
-              //   height: size.height * 0.07,
-              //   width: size.width * 0.4,
-              //   child: InkWell(
-              //     onTap: () {
-              //       setState(() {
-              //         mailSend();
-              //       });
-              //     },
-              //     child: Container(
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(15.0),
-              //         gradient: LinearGradient(
-              //           stops: const [0.4, 2],
-              //           begin: Alignment.centerRight,
-              //           end: Alignment.centerLeft,
-              //           colors: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
-              //         ),
-              //       ),
-              //       child: Align(
-              //         child: Text(
-              //           'Pay Online',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.bold,
-              //               fontSize: size.height * 0.02,
-              //               color: Colors.white),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   width: 20,
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.07,
-              //   width: size.width * 0.4,
-              //   child: InkWell(
-              //     onTap: () {
-              //       setState(() {
-              //         mailSend();
-              //       });
-              //     },
-              //     child: Container(
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(15.0),
-              //         gradient: LinearGradient(
-              //           stops: const [0.4, 2],
-              //           begin: Alignment.centerRight,
-              //           end: Alignment.centerLeft,
-              //           colors: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
-              //         ),
-              //       ),
-              //       child: Align(
-              //         child: Text(
-              //           'Pay on Site',
-              //           style: TextStyle(
-              //               fontWeight: FontWeight.bold,
-              //               fontSize: size.height * 0.02,
-              //               color: Colors.white),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-            ],
+            ),
           ),
         ),
       ),

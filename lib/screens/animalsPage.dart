@@ -1,6 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 import '../theme/color.dart';
@@ -21,27 +25,10 @@ var COLORS = [
 ];
 
 class _AnimalsPageState extends State<AnimalsPage> {
-  // ignore: non_constant_identifier_names
-  late VideoPlayerController _controller;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _controller =
-    //     VideoPlayerController.asset("assests/videos/Desert Monitor.mp4")
-    //       ..initialize().then(
-    //         (_) {
-    //           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-    //           setState(() {});
-    //         },
-    //       );
-    // _controller = VideoPlayerController.network(
-    //     'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-    //   ..initialize().then((_) {
-    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-    //     setState(() {});
-    //   });
   }
 
   List data = [
@@ -54,7 +41,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The largest and most aggressive lizard in the Arabian Peninsula, Reaching a length of 1.2 m. The body of lizard makes up one third Of its total length and the rest consists of a whip-like tail.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Desert Monitor.jpg",
-      "video": "assests/videos/Desert Monitor.mp4"
+      "video": "assets/videos/DesertMonitor.mp4",
+      "link": "https://www.youtube.com/watch?v=IGOJPYCOqsY"
     },
     {
       "title": "Arabian leopard",
@@ -65,7 +53,9 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "One of the most important predators in the Arabian Peninsula, considered as endangered species due to hunting and habitat loss. it is estimated that less than 200 individuals survive in the wild. The Arabian sup-species of the leopard is on average smaller than savanna inhabiting leopards of Africa.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Arabian leopard.jpg",
-      "video": ""
+      "video": "assets/videos/ArabianLeopard.mp4",
+      "link":
+          "https://www.youtube.com/watch?v=vvXlJEvg0g8&ab_channel=FocusWildlife"
     },
     {
       "title": "Hamadryads Sacred Baboon",
@@ -76,7 +66,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Sacred Baboon.jpg",
-      "video": ""
+      "video": "assets/videos/HamadryadsSacredBaboon.mp4",
+      "link": "https://www.youtube.com/watch?v=iXtc17ioUFk&ab_channel=BBCEarth"
     },
     //here
     {
@@ -88,7 +79,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "Arabian red fox is a subspecies of the red fox native to the Arabian Peninsula, specifically the Hajar and Dhofar Mountains in Oman, as well as the UAE, Syria, Jordan, Saudi Arabia and Yemen.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Arabian red fox.jpg",
-      "video": ""
+      "video": "assets/videos/ArabianRedFox.mp4",
+      "link": "https://www.youtube.com/watch?v=tyhL8gRlqgI&ab_channel=msd187"
     },
     {
       "title": "Black Rat",
@@ -99,7 +91,9 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The black rat, also known as the roof rat, ship rat, or house rat, is a common long-tailed rodent of the stereotypical rat genus Rattus, in the subfamily Murinae. It likely originated in the Indian subcontinent, but is now found worldwide.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Black rat.jpg",
-      "video": ""
+      "video": "assets/videos/BlackRat.mp4",
+      "link":
+          "https://www.youtube.com/watch?v=9-L28x3XCqs&ab_channel=SteveEvans"
     },
     {
       "title": "Sand Gazelle",
@@ -110,7 +104,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "he Arabian sand gazelle or reem is a species of gazelle native to the Middle East, specifically the Arabian and Syrian Deserts",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Sand Gazelle.jpg",
-      "video": ""
+      "video": "assets/videos/SandGazelle.mp4",
+      "link": "https://www.youtube.com/watch?v=jCK-_f7vhRo&ab_channel=RONXDRONE"
     },
     {
       "title": "Domestic Cat",
@@ -121,7 +116,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The cat is a domestic species of a small carnivorous mammal. It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Domestic Cat.jpg",
-      "video": ""
+      "video": "assets/videos/DesertMonitor.mp4",
+      "link": ""
     },
     {
       "title": "Common Pochard",
@@ -132,7 +128,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The common pochard is a medium-sized diving duck. The scientific name is derived from Greek aithuia an unidentified seabird mentioned by authors including Hesychius and Aristotle, and Latin ferina, 'wild game', from ferus, 'wild'",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Common Pochard.jpg",
-      "video": ""
+      "video": "assets/videos/DesertMonitor.mp4",
+      "link": ""
     },
     {
       "title": "Eurasian Teal",
@@ -143,7 +140,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The Eurasian teal, common teal, or Eurasian green-winged teal is a common and widespread duck which breeds in temperate Eurosiberia and migrates south in winter. The Eurasian teal is often called simply the teal due to being the only one of these small dabbling ducks in much of its range.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Eurasian Teal.jpg",
-      "video": ""
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
     },
     {
       "title": "Northern Pintail",
@@ -154,7 +152,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The pintail or northern pintail is a duck species with wide geographic distribution that breeds in the northern areas of Europe and across the Palearctic and North America.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Northern Pintail.jpeg",
-      "video": ""
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
     },
     {
       "title": "Egyptian Goose",
@@ -165,7 +164,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The Egyptian goose is a member of the duck, goose, and swan family Anatidae. It is native to Africa south of the Sahara and the Nile Valley. Egyptian geese were considered sacred by the Ancient Egyptians, and appeared in much of their artwork.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Egyptian Goose.jpg",
-      "video": ""
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
     },
     {
       "title": "Grey Francolin",
@@ -176,7 +176,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The grey francolin also known as 'manu moa' or 'Chicken Bird' is a species of francolin found in the plains and drier parts of the Indian subcontinent and Iran.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Grey Francolin.png",
-      "video": ""
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
     },
     {
       "title": "Great Egret",
@@ -187,7 +188,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The great egret, also known as the common egret, large egret, or great white egret or great white heron is a large, widely distributed egret, with four subspecies found in Asia, Africa, the Americas, and southern Europe, recently also spreading to more northern areas of Europe.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Great Egret.jpg",
-      "video": ""
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
     },
     {
       "title": "Greater Flamingo",
@@ -198,7 +200,8 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "The greater flamingo is the most widespread and largest species of the flamingo family. It is found in Africa, the Indian subcontinent, the Middle East, and in southern Europe.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Greater Flamingo.jpg",
-      "video": ""
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
     },
     {
       "title": "Hamadryads Sacred Baboon",
@@ -209,113 +212,9 @@ class _AnimalsPageState extends State<AnimalsPage> {
           "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
       "color": COLORS[new Random().nextInt(5)],
       "image": "assets/images/Sacred Baboon.jpg",
-      "video": ""
-    },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // },
-    // {
-    //   "title": "Hamadryads Sacred Baboon",
-    //   "content":
-    //       "Fairly common, there are said to be more than 350,000 of them in the Asir region of Saudi Arabia. A single male maintains 1 and 3 females of along with their dependent young. Several of these groups join together to form a band of 40-100 members",
-    //   "color": COLORS[new Random().nextInt(5)],
-    //   "image": "assets/images/Sacred Baboon.jpg"
-    // }
+      "video": "assets/videos/Desert Monitor.mp4",
+      "link": ""
+    }
   ];
 
   @override
@@ -380,13 +279,15 @@ buildBody(context, data) {
       return Column(
         children: [
           AwesomeListItem(
-              video: data[index]['video'],
-              title: data[index]["title"],
-              titleAR: data[index]["titleAR"],
-              contentAR: data[index]["contentAR"],
-              content: data[index]["content"],
-              color: data[index]["color"],
-              image: data[index]["image"]),
+            video: data[index]['video'],
+            title: data[index]["title"],
+            titleAR: data[index]["titleAR"],
+            contentAR: data[index]["contentAR"],
+            content: data[index]["content"],
+            color: data[index]["color"],
+            image: data[index]["image"],
+            link: data[index]['link'],
+          ),
           SizedBox(
             height: 20,
           )
@@ -404,6 +305,7 @@ class AwesomeListItem extends StatefulWidget {
   Color color;
   String image;
   String video;
+  String link;
 
   AwesomeListItem(
       {required this.title,
@@ -412,6 +314,7 @@ class AwesomeListItem extends StatefulWidget {
       required this.video,
       required this.image,
       required this.titleAR,
+      required this.link,
       required this.contentAR});
 
   @override
@@ -419,32 +322,36 @@ class AwesomeListItem extends StatefulWidget {
 }
 
 class _AwesomeListItemState extends State<AwesomeListItem> {
-  late VideoPlayerController _videoPlayerController;
-  bool startedPlaying = false;
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
   @override
   void initState() {
     super.initState();
 
-    // _videoPlayerController = VideoPlayerController.asset(widget.video);
-    // _videoPlayerController.addListener(() {
-    //   if (startedPlaying && !_videoPlayerController.value.isPlaying) {
-    //     Navigator.pop(context);
-    //   }
+    _controller = VideoPlayerController.asset(Uri.encodeFull(widget.video));
+
+    _initializeVideoPlayerFuture = _controller.initialize();
+
+    // _controller = VideoPlayerController.asset(
+    //   widget.video,
+    // )
+    // ..initialize().then((_) {
+    //   // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //   setState(() {});
     // });
+    // Initialize the controller and store the Future for later use.
+    // _initializeVideoPlayerFuture = _controller.initialize();
+    // Use the controller to loop the video.
+    _controller.setLooping(true);
   }
 
   @override
-  // void dispose() {
-  //   _videoPlayerController.dispose();
-  //   super.dispose();
-  // }
+  void dispose() {
+    // Ensure disposing of the VideoPlayerController to free up resources.
+    _controller.dispose();
 
-  // Future<bool> started() async {
-  //   await _videoPlayerController.initialize();
-  //   await _videoPlayerController.play();
-  //   startedPlaying = true;
-  //   return true;
-  // }
+    super.dispose();
+  }
 
   Widget build(BuildContext context) {
     return Card(
@@ -459,37 +366,12 @@ class _AwesomeListItemState extends State<AwesomeListItem> {
               child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        // _videoPlayerController =
-                        //     VideoPlayerController.asset(widget.video)
-                        //       ..initialize().then(
-                        //         (_) {
-                        //           // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-                        //           setState(() {});
-                        //         },
-                        //       );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => DetailsPage(
-                        //       id: 1,
-                        //       title: widget.title,
-                        //       content: widget.content,
-                        //       image: widget.image,
-                        //     ),
-                        //   ),
-                        // );
-                      });
-                    },
-                    child: new Text(
-                      lang != 1 ? widget.titleAR : widget.title,
-                      style: TextStyle(
-                          color: Colors.grey.shade800,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  new Text(
+                    lang != 1 ? widget.titleAR : widget.title,
+                    style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold),
                   ),
                   new Padding(
                     padding: const EdgeInsets.only(top: 16.0),
@@ -508,26 +390,7 @@ class _AwesomeListItemState extends State<AwesomeListItem> {
                     // color: Colors.red,
                     height: 30,
                     width: 100,
-                    child:
-
-                        // Center(
-                        //   child: FutureBuilder<bool>(
-                        //     future: started(),
-                        //     builder: (BuildContext context,
-                        //         AsyncSnapshot<bool> snapshot) {
-                        //       if (snapshot.data == true) {
-                        //         return AspectRatio(
-                        //           aspectRatio:
-                        //               _videoPlayerController.value.aspectRatio,
-                        //           child: VideoPlayer(_videoPlayerController),
-                        //         );
-                        //       } else {
-                        //         return const Text('waiting for video to load');
-                        //       }
-                        //     },
-                        //   ),
-                        // ),
-                        ButtonWidget(
+                    child: ButtonWidget(
                       text: 'Play',
                       backColor: [Color(0xFFa2e1a6), Color(0xff8fdb94)],
                       textColor: const [
@@ -536,39 +399,121 @@ class _AwesomeListItemState extends State<AwesomeListItem> {
                       ],
                       onPressed: () {
                         setState(() {
-                          // _videoPlayerController.initialize();
-                          // _videoPlayerController.play();
-                          // startedPlaying = true;
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (context) {
-                          //       return Center(
-                          //         child: Container(
-                          //           child: SizedBox(
-                          //             height: 500,
-                          //             width: 500,
-                          //             child: AspectRatio(
-                          //               aspectRatio: _videoPlayerController
-                          //                   .value.aspectRatio,
-                          //               child:
-                          //                   VideoPlayer(_videoPlayerController),
-                          //             ),
-                          //             // _videoPlayerController
-                          //             //         .value.isInitialized
-                          //             //     ? AspectRatio(
-                          //             //         aspectRatio:
-                          //             //             _videoPlayerController
-                          //             //                 .value.aspectRatio,
-                          //             //         child: VideoPlayer(
-                          //             //             _videoPlayerController),
-                          //             //       )
-                          //             //     : Container(),
-                          //           ),
-                          //         ),
-                          //       );
-                          //     });
-                          // _controller.play();
-                          // VideoPlayer(_controller);
+                          _controller.play();
+
+                          showDialog(
+                              barrierColor: Colors.black87,
+                              context: context,
+                              builder: (_) => new AlertDialog(
+                                    titlePadding: const EdgeInsets.all(10),
+                                    title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(widget.title,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                            overflow: TextOverflow.clip),
+                                        widget.link.isEmpty
+                                            ? SizedBox()
+                                            : SizedBox(
+                                                height: 30,
+                                                width: 80,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _launchURL(widget.link);
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15.0),
+                                                      gradient: LinearGradient(
+                                                        stops: const [0.4, 2],
+                                                        begin: Alignment
+                                                            .centerRight,
+                                                        end: Alignment
+                                                            .centerLeft,
+                                                        colors: [
+                                                          Color(0xFFb30000),
+                                                          Color(0xff9a0000)
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    child: Align(
+                                                      child: Text(
+                                                        'Youtube',
+                                                        overflow:
+                                                            TextOverflow.clip,
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                    backgroundColor: Colors.transparent,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20.0))),
+                                    content: Builder(
+                                      builder: (context) {
+                                        return FutureBuilder(
+                                          future: _initializeVideoPlayerFuture,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              IconData iconx = Icons.pause;
+
+                                              return AspectRatio(
+                                                aspectRatio:
+                                                    //  _controller
+                                                    //         .value.aspectRatio +
+                                                    1.9,
+                                                // Use the VideoPlayer widget to display the video.
+                                                child: widget.link.isEmpty
+                                                    ? Container(
+                                                        decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                                image: AssetImage(
+                                                                    widget
+                                                                        .image))),
+                                                      )
+                                                    : VideoPlayer(
+                                                        _controller,
+                                                      ),
+                                              );
+                                            } else {
+                                              // If the VideoPlayerController is still initializing, show a
+                                              // loading spinner.
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  )).then((val) {
+                            setState(() {
+                              if (_controller.value.isPlaying) {
+                                setState(() {});
+                                _controller.pause();
+
+                                _controller.initialize();
+                              }
+                            });
+                          });
                         });
                       },
                     ),
@@ -618,5 +563,30 @@ class _AwesomeListItemState extends State<AwesomeListItem> {
         ],
       ),
     );
+  }
+}
+
+_launchURL(link) async {
+  if (Platform.isIOS) {
+    if (await canLaunch("youtube://$link")) {
+      // ignore: deprecated_member_use
+      await launch("youtube://$link", forceSafariVC: false);
+    } else {
+      // ignore: deprecated_member_use
+      if (await canLaunch("youtube://$link")) {
+        // ignore: deprecated_member_use
+        await launch("youtube://$link");
+      } else {
+        throw 'Could not launch $link';
+      }
+    }
+  } else {
+    // const url = link;
+    if (await canLaunch(link)) {
+      // ignore: deprecated_member_use
+      await launch(link);
+    } else {
+      throw 'Could not launch $link';
+    }
   }
 }

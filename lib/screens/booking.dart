@@ -136,60 +136,124 @@ class _BookingPageState extends State<BookingPage> {
       //   ],
       // ),
 
-      bottomNavigationBar: SafeArea(
+      bottomNavigationBar: GestureDetector(
+        onTap: () {
+          _registerEmailKey.currentState?.save();
+          print(teacherEmail);
+          setState(() {
+            totalStudent = _chipKey.currentState?.getTags().length;
+
+            studentsName = _chipKey.currentState?.getTags();
+
+            totalTeacher = _chipTeacherKey.currentState?.getTags().length;
+            teacherName = _chipTeacherKey.currentState?.getTags();
+            if (totalStudent! >= 20) {
+              totalDiscountTeacher = totalTeacher! - 1;
+              totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
+            } else {
+              totalDiscountTeacher = totalTeacher;
+              totalAmount = totalStudent! * 2 + totalTeacher! * 5;
+            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PaymentPage(
+                  time: timeController.text,
+                  date: selectedDate.month.toString() +
+                      " - " +
+                      selectedDate.day.toString() +
+                      " - " +
+                      selectedDate.year.toString(),
+                  totalStudent: totalStudent,
+                  schoolName: schoolName,
+                  teacherNumber: teacherNumber,
+                  studentsName: studentsName,
+                  teacherEmail: teacherEmail,
+                  teacherName: teacherName,
+                  totalTeacher: totalTeacher,
+                  totalDiscountTeacher: totalDiscountTeacher,
+                  totalAmount: totalAmount,
+                ),
+              ),
+            );
+          });
+        },
         child: Container(
-          height: 46,
-          margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
-          child: RaisedButton(
-            color: appBarColor,
-            padding: EdgeInsets.all(15.0),
-            elevation: 5,
-            textColor: Colors.white,
-            child: Text(lang == 1 ? 'Pay' : 'ادقغ'),
-            onPressed: () {
-              _registerEmailKey.currentState?.save();
-              print(teacherEmail);
-              setState(() {
-                totalStudent = _chipKey.currentState?.getTags().length;
-
-                studentsName = _chipKey.currentState?.getTags();
-
-                totalTeacher = _chipTeacherKey.currentState?.getTags().length;
-                teacherName = _chipTeacherKey.currentState?.getTags();
-                if (totalStudent! >= 20) {
-                  totalDiscountTeacher = totalTeacher! - 1;
-                  totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
-                } else {
-                  totalDiscountTeacher = totalTeacher;
-                  totalAmount = totalStudent! * 2 + totalTeacher! * 5;
-                }
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentPage(
-                      time: timeController.text,
-                      date: selectedDate.month.toString() +
-                          " - " +
-                          selectedDate.day.toString() +
-                          " - " +
-                          selectedDate.year.toString(),
-                      totalStudent: totalStudent,
-                      schoolName: schoolName,
-                      teacherNumber: teacherNumber,
-                      studentsName: studentsName,
-                      teacherEmail: teacherEmail,
-                      teacherName: teacherName,
-                      totalTeacher: totalTeacher,
-                      totalDiscountTeacher: totalDiscountTeacher,
-                      totalAmount: totalAmount,
-                    ),
-                  ),
-                );
-              });
-            },
+          color: appBarColor,
+          child: SafeArea(
+            bottom: true,
+            child: Material(
+              elevation: 1,
+              color: appBarColor,
+              shadowColor: Colors.black,
+              // color: Color.fromARGB(255, 206, 188, 122),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Text(
+                  lang == 1 ? 'Pay' : 'ادقغ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
           ),
         ),
       ),
+
+      // bottomNavigationBar: SafeArea(
+      //   child: Container(
+      //     height: 46,
+      //     margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
+      //     child: RaisedButton(
+      //       color: appBarColor,
+      //       padding: EdgeInsets.all(15.0),
+      //       elevation: 5,
+      //       textColor: Colors.white,
+      //       child: Text(lang == 1 ? 'Pay' : 'ادقغ'),
+      //       onPressed: () {
+      //         _registerEmailKey.currentState?.save();
+      //         print(teacherEmail);
+      //         setState(() {
+      //           totalStudent = _chipKey.currentState?.getTags().length;
+
+      //           studentsName = _chipKey.currentState?.getTags();
+
+      //           totalTeacher = _chipTeacherKey.currentState?.getTags().length;
+      //           teacherName = _chipTeacherKey.currentState?.getTags();
+      //           if (totalStudent! >= 20) {
+      //             totalDiscountTeacher = totalTeacher! - 1;
+      //             totalAmount = totalStudent! * 2 + totalDiscountTeacher! * 5;
+      //           } else {
+      //             totalDiscountTeacher = totalTeacher;
+      //             totalAmount = totalStudent! * 2 + totalTeacher! * 5;
+      //           }
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(
+      //               builder: (context) => PaymentPage(
+      //                 time: timeController.text,
+      //                 date: selectedDate.month.toString() +
+      //                     " - " +
+      //                     selectedDate.day.toString() +
+      //                     " - " +
+      //                     selectedDate.year.toString(),
+      //                 totalStudent: totalStudent,
+      //                 schoolName: schoolName,
+      //                 teacherNumber: teacherNumber,
+      //                 studentsName: studentsName,
+      //                 teacherEmail: teacherEmail,
+      //                 teacherName: teacherName,
+      //                 totalTeacher: totalTeacher,
+      //                 totalDiscountTeacher: totalDiscountTeacher,
+      //                 totalAmount: totalAmount,
+      //               ),
+      //             ),
+      //           );
+      //         });
+      //       },
+      //     ),
+      //   ),
+      // ),
       // bottomNavigationBar: Row(
       //   mainAxisAlignment: MainAxisAlignment.center,
       //   children: [

@@ -14,31 +14,37 @@ class _DetailChildrenPageState extends State<DetailChildrenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: SafeArea(
+      bottomNavigationBar: GestureDetector(
+        onTap: () {
+          setState(() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BookingPage(
+                  title: lang != 1 ? "مزرعة الاطفال" : "Children's Farm Centre",
+                ),
+              ),
+            );
+          });
+        },
         child: Container(
-          height: 46,
-          margin: EdgeInsets.symmetric(vertical: 24, horizontal: 22),
-          child: RaisedButton(
-            color: appBarColor,
-            padding: EdgeInsets.all(15.0),
-            elevation: 5,
-            textColor: Colors.white,
-            child: Text(lang == 1 ? 'Booking' : 'الحجز'),
-            onPressed: () {
-              // Navigator.pop(context);
-              setState(() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BookingPage(
-                      title: lang != 1
-                          ? "مزرعة الاطفال"
-                          : "Children's Farm Centre",
-                    ),
-                  ),
-                );
-              });
-            },
+          color: appBarColor,
+          child: SafeArea(
+            bottom: true,
+            child: Material(
+              elevation: 1,
+              color: appBarColor,
+              shadowColor: Colors.black,
+              // color: Color.fromARGB(255, 206, 188, 122),
+              child: Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Text(
+                  lang == 1 ? 'Booking' : 'الحجز',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
           ),
         ),
       ),

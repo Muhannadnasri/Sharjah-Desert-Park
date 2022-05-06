@@ -224,7 +224,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
       if (mounted && widget.autofocus) {
         FocusScope.of(context).autofocus(_effectiveFocusNode);
       }
@@ -250,7 +250,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
     _textInputConnection!.show();
 
     Future.delayed(const Duration(milliseconds: 100), () {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
+      WidgetsBinding.instance?.addPostFrameCallback((_) async {
         RenderObject? renderBox = context.findRenderObject();
         Scrollable.of(context)?.position.ensureVisible(renderBox!);
       });
